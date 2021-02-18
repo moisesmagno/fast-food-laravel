@@ -15,7 +15,21 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        // $orders = Order::latest()->get();
+        // foreach($orders as $order) {
+        //     $order->pathImage = "http://localhost:8080/fast-food-laravel/public/images/";
+        // }
+
+        $orders = Order::where('orders.status', 1)
+                ->join('products', 'orders.product_id', '=', 'products.id')
+                ->select('orders.*', 'products.name', 'products.image' )
+                ->get();
+
+        foreach($orders as $order) {
+            $order->pathImage = "http://localhost:8080/fast-food-laravel/public/images/";
+        }
+
+        return $orders;
     }
 
     /**
@@ -26,7 +40,28 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        try {
+            $dataOrders = $request->all();
+
+            foreach($dataOrders as $item){
+                $order = new Order;
+                $order->customer_name = $item['customerName'];
+                $order->product_id = intval($item['id']);
+                $order->order_number =  rand(1, 1000);
+                $order->observation = $item['observation'];
+                $order->status = 1;
+
+                $order->save();
+            }
+
+            return true;
+
+        } catch (Throwable $e) {
+            report($e);
+
+            return false;
+        }
     }
 
     /**

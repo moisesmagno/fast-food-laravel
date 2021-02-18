@@ -16,7 +16,6 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::latest()->get();
-        // $way = 'http://localhost:8080/fast-food-laravel/public/images/';
         foreach($products as $product) {
             $product->pathImage = "http://localhost:8080/fast-food-laravel/public/images/";
         }
@@ -32,7 +31,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
     }
 
     /**
