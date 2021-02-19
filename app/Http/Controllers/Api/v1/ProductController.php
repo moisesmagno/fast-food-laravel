@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API\V1;
+namespace App\Http\Controllers\Api\v1;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
@@ -17,7 +17,8 @@ class ProductController extends Controller
     {
         $products = Product::latest()->get();
         foreach($products as $product) {
-            $product->pathImage = "http://localhost:8080/fast-food-laravel/public/images/";
+            $product->codNameProducto = strval($product->id).' '.$product->name;
+            $product->pathImage = "http://192.168.64.3/fast-food-laravel/public/images/";
         }
 
         return $products;
@@ -31,7 +32,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-
+        //
     }
 
     /**
